@@ -5,9 +5,9 @@
 In order to run the project a **.env** file is required in the project's root, with the following variables:
 
 ```
-    TENANT_ID=""
-    CLIENT_ID=""
-    CLIENT_SECRET=""
+TENANT_ID=""
+CLIENT_ID=""
+CLIENT_SECRET=""
 ```
 
 ## Running the project
@@ -15,11 +15,11 @@ In order to run the project a **.env** file is required in the project's root, w
 ### Install dependencies
 
 ```
-    npm install
+npm install
 ```
 
 ### Run the project locally
 
 ```
-    npm run dev
+npm run dev
 ```
