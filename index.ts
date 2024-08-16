@@ -2,41 +2,35 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-// Other dependencies
-import {ConfidentialClientApplication} from "@azure/msal-node";
+import { ClientSecretCredential } from "@azure/identity";
+import { Client } from "@microsoft/microsoft-graph-client";
+import { TokenCredentialAuthenticationProvider } from '@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials/index.js';
 
-// MSAL configuration for Confidential Client
-const msalConfig = {
-    auth: {
-      clientId: `${process.env.CLIENT_ID}`,
-      authority: `${process.env.AAD_ENDPOINT}${process.env.TENANT_ID}`,
-      clientSecret: process.env.CLIENT_SECRET,
-    }
-};
 
-console.dir(msalConfig);
-// Endpoint to call
-const apiConfig = {
-    uri: process.env.GRAPH_ENDPOINT + 'v1.0/users',
-};
+// @azure/identity
+const credential = new ClientSecretCredential(
+    `${process.env.TENANT_ID}`,
+    `${process.env.CLIENT_ID}`,
+    `${process.env.CLIENT_SECRET}`,
+  );
   
-// Configure scopes for the token request
-const tokenRequest = {
-    scopes: [process.env.GRAPH_ENDPOINT + '.default'],
-};
+  // @microsoft/microsoft-graph-client/authProviders/azureTokenCredentials
+  const authProvider = new TokenCredentialAuthenticationProvider(credential, {
+    // The client credentials flow requires that you request the
+    // /.default scope, and pre-configure your permissions on the
+    // app registration in Azure. An administrator must grant consent
+    // to those permissions beforehand.
+    scopes: ['https://graph.microsoft.com/.default'],
+  });
   
-// Instantiate MSAL Confidential Client
-const cca = new ConfidentialClientApplication(msalConfig);
+  const graphClient = Client.initWithMiddleware({ authProvider: authProvider });
 
-async function main() {
-    try {
-        const authResponse = await cca.acquireTokenByClientCredential(tokenRequest);
-        if (authResponse != null) {
-            console.log(authResponse.accessToken) // display access token
-        }
-    } catch (error) {
-        console.log(error);
-    }
-}
+  // GET https://graph.microsoft.com/v1.0/me
+// const user = async () => {
+//     return response;
+// };
 
-main();
+// GET https://graph.microsoft.com/v1.0/user
+const resp = await graphClient.api('/users').get();
+
+console.log(resp);

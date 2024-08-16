@@ -1,6 +1,7 @@
 {
   "name": "Repro App Role Assignment",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,6 +16,7 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "@azure/msal-node": "^2.13.0"
+    "@azure/identity": "^4.4.1",
+    "@microsoft/microsoft-graph-client": "^3.0.7"
   }
 }
