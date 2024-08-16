@@ -15,10 +15,14 @@ const authProvider = new TokenCredentialAuthenticationProvider(credential, {
     scopes: ['https://graph.microsoft.com/.default'],
 });
 const graphClient = Client.initWithMiddleware({ authProvider: authProvider });
-// GET https://graph.microsoft.com/v1.0/me
-// const user = async () => {
-//     return response;
-// };
-// GET https://graph.microsoft.com/v1.0/user
-const resp = await graphClient.api('/users').get();
+// // GET https://graph.microsoft.com/v1.0/user
+// const resp = await graphClient.api('/users').get();
+// console.log(resp);
+const appRoleAssignment = {
+    principalId: 'da55e018-55f8-48d3-aa49-7695f104d1ba',
+    resourceId: '26444935-9f63-403b-916d-55b67fefa6ab', // 26444935-9f63-403b-916d-55b67fefa6ab / 5508ed16-89a5-418f-8654-e5e66f2f2533
+    appRoleId: '5dc9486f-0607-4907-a159-7b8e5d819115'
+};
+const resp = await graphClient.api('/servicePrincipals/26444935-9f63-403b-916d-55b67fefa6ab/appRoleAssignedTo')
+    .post(appRoleAssignment);
 console.log(resp);

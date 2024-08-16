@@ -25,12 +25,14 @@ const credential = new ClientSecretCredential(
   
   const graphClient = Client.initWithMiddleware({ authProvider: authProvider });
 
-  // GET https://graph.microsoft.com/v1.0/me
-// const user = async () => {
-//     return response;
-// };
 
-// GET https://graph.microsoft.com/v1.0/user
-const resp = await graphClient.api('/users').get();
+const appRoleAssignment = {
+    principalId: 'da55e018-55f8-48d3-aa49-7695f104d1ba', // Object ID of the Service Principal which will be granted the App Role
+    resourceId: '26444935-9f63-403b-916d-55b67fefa6ab', // Object ID of the Service Principal exposing the App Role
+    appRoleId: '5dc9486f-0607-4907-a159-7b8e5d819115' // ID of the App Role
+  };
+  
+const resp = await graphClient.api('/servicePrincipals/26444935-9f63-403b-916d-55b67fefa6ab/appRoleAssignedTo')
+    .post(appRoleAssignment);
 
 console.log(resp);
