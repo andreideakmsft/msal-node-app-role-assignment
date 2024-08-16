@@ -1,0 +1,20 @@
+{
+  "name": "Repro App Role Assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx tsc && node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@azure/msal-node": "^2.13.0"
+  }
+}
